@@ -3,11 +3,11 @@ package main
 import "time"
 
 type ListTicketsResponse struct {
-	Tickets []Ticket `json:"tickets"`
+	Tickets []*Ticket `json:"tickets"`
 }
 
 type ShowTicketResponse struct {
-	SingleTickets Ticket `json:"ticket"`
+	SingleTickets *Ticket `json:"ticket"`
 }
 
 type Ticket struct {

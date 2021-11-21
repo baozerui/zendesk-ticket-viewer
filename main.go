@@ -22,6 +22,7 @@ func main() {
 		if command == OPTION_LIST_TICKETS {
 			var r ListTicketsResponse
 			url := fmt.Sprintf(LIST_TICKETS_URL, subDomain)
+			// get all ticket from Api
 			body, err := makeRequest(url)
 			if err != nil {
 				log.Fatal(err)
@@ -39,6 +40,7 @@ func main() {
 			fmt.Print("Input the ID of ticket: ")
 			fmt.Scanln(&id)
 			url := fmt.Sprintf(SHOW_TICKET_URL, subDomain, id)
+			// get one ticket from Api
 			body, err := makeRequest(url)
 			if err != nil {
 				log.Fatal(err)

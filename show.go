@@ -5,6 +5,8 @@ import (
 	"math"
 )
 
+// Show all the tickets user have
+// Page through tickets when more than 25 are returned
 func showAllTickets(r ListTicketsResponse) {
 	total_page := int(math.Ceil(float64(len(r.Tickets)) / float64(PAGE_SIZE)))
 	fmt.Printf("\n\nThere are total %v tickets\n", len(r.Tickets))
@@ -12,10 +14,17 @@ func showAllTickets(r ListTicketsResponse) {
 	cur := 0
 	for {
 		fmt.Printf("\nThis is page %v\n", cur+1)
+		var tickets_num int
+		if len(r.Tickets)-(cur*PAGE_SIZE) >= PAGE_SIZE {
+			tickets_num = PAGE_SIZE
+		} else {
+			tickets_num = len(r.Tickets) - (cur * PAGE_SIZE)
+		}
+		fmt.Printf("\nThis are %v tickets in this page\n", tickets_num)
 		for i := cur * PAGE_SIZE; i < (cur+1)*PAGE_SIZE && i < len(r.Tickets); i++ {
 			createdTime := r.Tickets[i].CreatedAt
 			createdTimeStr := createdTime.Format("2006-01-02 15:04:05")
-			fmt.Printf("%v\nTicket with subject '%v' requested by %v and assigned by %v on %v\n",
+			fmt.Printf("%v\nTicket with subject '%v' requested by %v and assigned to %v on %v\n",
 				r.Tickets[i].ID, r.Tickets[i].Subject, r.Tickets[i].RequesterID,
 				r.Tickets[i].AssigneeID, createdTimeStr)
 		}
@@ -30,12 +39,20 @@ func showAllTickets(r ListTicketsResponse) {
 		var isExit bool
 		for {
 			fmt.Scanln(&command)
-			if command == OPTION_NEXT_PAGE && cur != total_page-1 {
-				cur++
-				break
-			} else if command == OPTION_PRE_PAGE && cur != 0 {
-				cur--
-				break
+			if command == OPTION_NEXT_PAGE {
+				if cur != total_page-1 {
+					cur++
+					break
+				} else {
+					fmt.Println("It's the last page")
+				}
+			} else if command == OPTION_PRE_PAGE {
+				if cur != 0 {
+					cur--
+					break
+				} else {
+					fmt.Println("It's the first page")
+				}
 			} else if command == OPTION_RETURN {
 				isExit = true
 				break
@@ -49,6 +66,7 @@ func showAllTickets(r ListTicketsResponse) {
 	}
 }
 
+// Display individual ticket details
 func showDetailedTicket(r ShowTicketResponse) {
 	if r.SingleTickets.Subject == "" && r.SingleTickets.Description == "" {
 		fmt.Println("Can not find this ticket")

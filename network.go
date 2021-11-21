@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// Make a get request to get data
 func makeRequest(url string) ([]byte, error) {
 	client := &http.Client{}
 
@@ -16,6 +17,7 @@ func makeRequest(url string) ([]byte, error) {
 		return nil, err
 	}
 	auth := emailAddress + ":" + password
+	// get the token from email and password
 	token := base64.StdEncoding.EncodeToString([]byte(auth))
 	req.Header.Add("Authorization", "Basic "+token)
 	req.Header.Add("Content-Type", "application/json")

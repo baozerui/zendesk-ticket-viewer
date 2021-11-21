@@ -7,6 +7,8 @@ import (
 	"github.com/howeyc/gopass"
 )
 
+// Get credential from User
+// Return subdomain, email address and password
 func getCredential() (string, string, string, error) {
 	var subDomain string
 	var emailAddress string
@@ -26,6 +28,8 @@ func getCredential() (string, string, string, error) {
 	return subDomain, emailAddress, password, nil
 }
 
+// Prompt of main menu
+// Return the command user input
 func mainMenu() string {
 	fmt.Println("\n\nMenu")
 	fmt.Println("* Press 1 to view all tickets")
