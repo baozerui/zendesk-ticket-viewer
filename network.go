@@ -27,7 +27,12 @@ func makeRequest(url string, emailAddress string, password string) ([]byte, erro
 	}
 	// Alert user api is unavailable
 	if resp.StatusCode != 200 {
-		fmt.Println("Unavailable API")
+		fmt.Printf("Error Code: %d\n", resp.StatusCode)
+		if resp.StatusCode == 401 {
+			fmt.Println("Unauthorized User")
+		} else {
+			fmt.Println("Unavailable API")
+		}
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
