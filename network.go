@@ -4,7 +4,6 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -13,7 +12,7 @@ func makeRequest(url string, emailAddress string, password string) ([]byte, erro
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("Fail to make request")
 		return nil, err
 	}
 	auth := emailAddress + ":" + password
@@ -23,7 +22,7 @@ func makeRequest(url string, emailAddress string, password string) ([]byte, erro
 	req.Header.Add("Content-Type", "application/json")
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("Fail to do the request")
 		return nil, err
 	}
 	// Alert user api is unavailable
@@ -32,7 +31,7 @@ func makeRequest(url string, emailAddress string, password string) ([]byte, erro
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("Fail to read response")
 		return nil, err
 	}
 	resp.Body.Close()

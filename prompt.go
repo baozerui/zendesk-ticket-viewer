@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"log"
 	"strings"
 
 	"github.com/howeyc/gopass"
@@ -25,8 +24,7 @@ func getCredential() (string, string, string, error) {
 	passwordByte, err := gopass.GetPasswdMasked()
 	password = string(passwordByte)
 	if err != nil {
-		log.Fatalln(err)
-		return "", "", "", nil
+		return "", "", "", err
 	}
 	return subDomain, emailAddress, password, nil
 }

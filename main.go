@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 )
 
@@ -14,7 +13,7 @@ func main() {
 	var err error
 	subDomain, emailAddress, password, err = getCredential()
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println("Fail to get password")
 		return
 	}
 	for {
@@ -25,12 +24,12 @@ func main() {
 			// get all ticket from Api
 			body, err := makeRequest(url, emailAddress, password)
 			if err != nil {
-				log.Fatal(err)
+				fmt.Println("Fail to make request")
 				return
 			}
 			err = json.Unmarshal(body, &r)
 			if err != nil {
-				log.Fatal(err)
+				fmt.Println("Invalid response")
 				return
 			}
 			showAllTickets(os.Stdin, r)
@@ -43,12 +42,12 @@ func main() {
 			// get one ticket from Api
 			body, err := makeRequest(url, emailAddress, password)
 			if err != nil {
-				log.Fatal(err)
+				fmt.Println("Fail to make request")
 				return
 			}
 			err = json.Unmarshal(body, &r)
 			if err != nil {
-				log.Fatal(err)
+				fmt.Println("Invalid response")
 				return
 			}
 			showDetailedTicket(r)
