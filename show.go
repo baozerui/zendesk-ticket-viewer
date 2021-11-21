@@ -36,8 +36,9 @@ func showAllTickets(stdin io.Reader, r ListTicketsResponse) {
 				r.Tickets[i].ID, r.Tickets[i].Subject, r.Tickets[i].RequesterID,
 				r.Tickets[i].AssigneeID, createdTimeStr)
 		}
+		fmt.Println()
 		if cur != total_page-1 {
-			fmt.Println("\n\n* Press 1 to see next page")
+			fmt.Println("* Press 1 to see next page")
 		}
 		if cur != 0 {
 			fmt.Println("* Press 2 to see previous page")
