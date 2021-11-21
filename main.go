@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 )
 
 var subDomain string
@@ -18,7 +19,7 @@ func main() {
 		return
 	}
 	for {
-		command := mainMenu()
+		command := mainMenu(os.Stdin)
 		if command == OPTION_LIST_TICKETS {
 			var r ListTicketsResponse
 			url := fmt.Sprintf(LIST_TICKETS_URL, subDomain)
@@ -33,7 +34,7 @@ func main() {
 				log.Fatal(err)
 				return
 			}
-			showAllTickets(r)
+			showAllTickets(os.Stdin, r)
 		} else if command == OPTION_SHOW_TICK {
 			var r ShowTicketResponse
 			var id string

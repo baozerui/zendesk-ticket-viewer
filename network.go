@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/base64"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -25,6 +26,10 @@ func makeRequest(url string) ([]byte, error) {
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
+	}
+	// Alert user api is unavailable
+	if resp.StatusCode != 200 {
+		fmt.Println("Unavailable API")
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

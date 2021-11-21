@@ -1,13 +1,17 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"math"
+	"strings"
 )
 
 // Show all the tickets user have
 // Page through tickets when more than 25 are returned
-func showAllTickets(r ListTicketsResponse) {
+func showAllTickets(stdin io.Reader, r ListTicketsResponse) {
+	reader := bufio.NewReader(stdin)
 	total_page := int(math.Ceil(float64(len(r.Tickets)) / float64(PAGE_SIZE)))
 	fmt.Printf("\n\nThere are total %v tickets\n", len(r.Tickets))
 	fmt.Printf("There are %v pages\n", total_page)
@@ -38,7 +42,8 @@ func showAllTickets(r ListTicketsResponse) {
 		var command string
 		var isExit bool
 		for {
-			fmt.Scanln(&command)
+			command, _ = reader.ReadString('\n')
+			command = strings.TrimSpace(command)
 			if command == OPTION_NEXT_PAGE {
 				if cur != total_page-1 {
 					cur++
@@ -68,7 +73,7 @@ func showAllTickets(r ListTicketsResponse) {
 
 // Display individual ticket details
 func showDetailedTicket(r ShowTicketResponse) {
-	if r.SingleTickets.Subject == "" && r.SingleTickets.Description == "" {
+	if r.SingleTickets == nil {
 		fmt.Println("Can not find this ticket")
 		return
 	}

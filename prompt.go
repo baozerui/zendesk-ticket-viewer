@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"log"
+	"strings"
 
 	"github.com/howeyc/gopass"
 )
@@ -30,12 +33,13 @@ func getCredential() (string, string, string, error) {
 
 // Prompt of main menu
 // Return the command user input
-func mainMenu() string {
+func mainMenu(stdin io.Reader) string {
+	reader := bufio.NewReader(stdin)
 	fmt.Println("\n\nMenu")
 	fmt.Println("* Press 1 to view all tickets")
 	fmt.Println("* Press 2 to view individual ticket details")
 	fmt.Println("* Press 3 to quit")
-	var command string
-	fmt.Scanln(&command)
+	command, _ := reader.ReadString('\n')
+	command = strings.TrimSpace(command)
 	return command
 }
