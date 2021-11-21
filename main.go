@@ -30,7 +30,8 @@ func main() {
 		return
 	}
 	for {
-		fmt.Println("Menu")
+
+		fmt.Println("\n\nMenu")
 		fmt.Println("* Press 1 to view all tickets")
 		fmt.Println("* Press 2 to view individual ticket details")
 		fmt.Println("* Press 3 to quit")
@@ -61,18 +62,18 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("There are %v tickets\n", len(r.Tickets))
+			fmt.Printf("\n\nThere are total %v tickets\n", len(r.Tickets))
 			fmt.Printf("There are %v pages\n", math.Ceil(float64(len(r.Tickets))/float64(PAGE_SIZE)))
 			cur := 0
 			for {
 				for i := cur * PAGE_SIZE; i < (cur+1)*PAGE_SIZE && i < len(r.Tickets); i++ {
 					createdTime := r.Tickets[i].CreatedAt
 					createdTimeStr := createdTime.Format("2006-01-02 15:04:05")
-					fmt.Printf("Ticket with subject '%v' requested by %v and assigned by %v on %v\n",
-						r.Tickets[i].Subject, r.Tickets[i].RequesterID, r.Tickets[i].AssigneeID,
-						createdTimeStr)
+					fmt.Printf("%v\nTicket with subject '%v' requested by %v and assigned by %v on %v\n",
+						r.Tickets[i].ID, r.Tickets[i].Subject, r.Tickets[i].RequesterID,
+						r.Tickets[i].AssigneeID, createdTimeStr)
 				}
-				fmt.Println("* Press 1 to see next page")
+				fmt.Println("\n\n* Press 1 to see next page")
 				fmt.Println("* Press 2 to see previous page")
 				fmt.Println("* Press 3 to return to main menu")
 				var command string
@@ -113,7 +114,7 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("Subject: %s\n", r.SingleTickets.Subject)
+			fmt.Printf("\n\nSubject: %s\n", r.SingleTickets.Subject)
 			fmt.Printf("Description: %s\n", r.SingleTickets.Description)
 			fmt.Printf("Tags: %v\n", r.SingleTickets.Tags)
 			fmt.Printf("Requester ID: %v\n", r.SingleTickets.RequesterID)
