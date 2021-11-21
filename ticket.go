@@ -2,8 +2,12 @@ package main
 
 import "time"
 
-type TicketResponse struct {
+type ListTicketsResponse struct {
 	Tickets []Ticket `json:"tickets"`
+}
+
+type ShowTicketResponse struct {
+	SingleTickets Ticket `json:"ticket"`
 }
 
 type Ticket struct {
