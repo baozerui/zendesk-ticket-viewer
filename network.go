@@ -9,9 +9,8 @@ import (
 )
 
 // Make a get request to get data
-func makeRequest(url string) ([]byte, error) {
+func makeRequest(url string, emailAddress string, password string) ([]byte, error) {
 	client := &http.Client{}
-
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)

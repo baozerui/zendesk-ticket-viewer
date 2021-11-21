@@ -7,11 +7,10 @@ import (
 	"os"
 )
 
-var subDomain string
-var emailAddress string
-var password string
-
 func main() {
+	var subDomain string
+	var emailAddress string
+	var password string
 	var err error
 	subDomain, emailAddress, password, err = getCredential()
 	if err != nil {
@@ -24,7 +23,7 @@ func main() {
 			var r ListTicketsResponse
 			url := fmt.Sprintf(LIST_TICKETS_URL, subDomain)
 			// get all ticket from Api
-			body, err := makeRequest(url)
+			body, err := makeRequest(url, emailAddress, password)
 			if err != nil {
 				log.Fatal(err)
 				return
@@ -42,7 +41,7 @@ func main() {
 			fmt.Scanln(&id)
 			url := fmt.Sprintf(SHOW_TICKET_URL, subDomain, id)
 			// get one ticket from Api
-			body, err := makeRequest(url)
+			body, err := makeRequest(url, emailAddress, password)
 			if err != nil {
 				log.Fatal(err)
 				return
