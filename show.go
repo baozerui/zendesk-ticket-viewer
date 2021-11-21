@@ -13,6 +13,10 @@ import (
 func showAllTickets(stdin io.Reader, r ListTicketsResponse) {
 	reader := bufio.NewReader(stdin)
 	total_page := int(math.Ceil(float64(len(r.Tickets)) / float64(PAGE_SIZE)))
+	if len(r.Tickets) == 0 {
+		fmt.Println("There is no ticket")
+		return
+	}
 	fmt.Printf("\n\nThere are total %v tickets\n", len(r.Tickets))
 	fmt.Printf("There are %v pages\n", total_page)
 	cur := 0
